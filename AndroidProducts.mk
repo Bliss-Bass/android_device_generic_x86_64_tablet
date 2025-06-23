@@ -15,9 +15,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_x86_64.mk
+    $(LOCAL_DIR)/lineage_x86_64_tablet.mk
 
 COMMON_LUNCH_CHOICES := \
-    lineage_x86_64-user \
-    lineage_x86_64-userdebug \
-    lineage_x86_64-eng
+    lineage_x86_64_tablet-user \
+    lineage_x86_64_tablet-userdebug \
+    lineage_x86_64_tablet-eng

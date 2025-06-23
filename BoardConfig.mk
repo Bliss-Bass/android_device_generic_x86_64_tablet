@@ -1,7 +1,7 @@
 #
 # BoardConfig.mk for x86 platform
 #
-LOCAL_COMMON_TREE := device/generic/x86_64_tv
+LOCAL_COMMON_TREE := device/generic/x86_64_tablet
 
 # The generic product target doesn't have any hardware-specific pieces.
 TARGET_NO_BOOTLOADER := true

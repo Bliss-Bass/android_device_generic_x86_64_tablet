@@ -30,7 +30,7 @@ BOARD_IS_ZENITH_BUILD :=true
 $(call inherit-product,$(LOCAL_PATH)/device.mk)
 
 # Overrides
-PRODUCT_NAME := lineage_x86_64
+PRODUCT_NAME := lineage_x86_64_tablet
 PRODUCT_BRAND := Android-x86
-PRODUCT_DEVICE := x86_64
+PRODUCT_DEVICE := x86_64_tablet
 PRODUCT_MODEL := Generic Android-x86_64
