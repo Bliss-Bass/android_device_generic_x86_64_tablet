@@ -15,8 +15,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_x86_64_tv.mk \
-    $(LOCAL_DIR)/x86_64_tv_go/lineage_x86_64_tv_go.mk
+    $(LOCAL_DIR)/lineage_x86_64.mk
 
-$(foreach build_type, user userdebug eng, \
-    $(eval COMMON_LUNCH_CHOICES += lineage_x86_64_tv-$(build_type) lineage_x86_64_tv_go-$(build_type)))
+COMMON_LUNCH_CHOICES := \
+    lineage_x86_64-user \
+    lineage_x86_64-userdebug \
+    lineage_x86_64-eng

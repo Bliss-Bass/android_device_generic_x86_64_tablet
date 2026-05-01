@@ -15,7 +15,7 @@
 #
 # Inherit from those products. Most specific first.
 $(call inherit-product,$(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, device/google/atv/products/atv_base.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit lowram TV config for Go build
 $(call inherit-product, device/google/atv/products/atv_lowram_defaults.mk)
@@ -23,15 +23,14 @@ PRODUCT_PACKAGES += \
     TvLowRamOverlay
 
 # Inherit some common Lineage stuff.
-TARGET_ATV_FORCE_1080_SCALING := false
-$(call inherit-product, vendor/lineage/config/common_tv.mk)
+$(call inherit-product, vendor/lineage/config/common_full_tablet.mk)
 
 # Include from Android-x86 device
-BOARD_IS_GO_BUILD := true
-$(call inherit-product,$(LOCAL_PATH)/../device.mk)
+BOARD_IS_ZENITH_BUILD :=true
+$(call inherit-product,$(LOCAL_PATH)/device.mk)
 
 # Overrides
-PRODUCT_NAME := lineage_x86_64_tv_go
+PRODUCT_NAME := lineage_x86_64
 PRODUCT_BRAND := Android-x86
-PRODUCT_DEVICE := x86_64_tv_go
+PRODUCT_DEVICE := x86_64
 PRODUCT_MODEL := Generic Android-x86_64

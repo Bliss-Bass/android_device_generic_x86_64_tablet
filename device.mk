@@ -16,9 +16,6 @@
 
 PRODUCT_DIR := $(dir $(lastword $(filter-out device/common/%,$(filter device/%,$(ALL_PRODUCTS)))))
 
-# ATV
-PRODUCT_IS_ATV := true
-
 # No Compressed APEXes
 OVERRIDE_PRODUCT_COMPRESSED_APEX := false
 
@@ -154,10 +151,11 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
 PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
-PRODUCT_CHARACTERISTICS := tv
+PRODUCT_CHARACTERISTICS := tablet
 
 # AAPT
-PRODUCT_AAPT_PREF_CONFIG := tvdpi
+PRODUCT_AAPT_CONFIG := normal large xlarge mdpi hdpi
+PRODUCT_AAPT_PREF_CONFIG := mdpi
 
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
@@ -258,11 +256,12 @@ endif
 # Add agp-apps
 $(call inherit-product-if-exists, vendor/agp-apps/agp-apps.mk)
 
+# Enable MultiWindow
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.debug.multi_window=true \
+    persist.sys.debug.desktop_mode=true
+
 # DRM service opt-in
 PRODUCT_VENDOR_PROPERTIES += drm.service.enabled=true
 
 PRODUCT_REQUIRES_INSECURE_EXECMEM_FOR_SWIFTSHADER := true
-
-# Custom Lineage OTA server
-PRODUCT_PRODUCT_PROPERTIES += \
-    lineage.updater.uri=https://lineageos-tv-x86.github.io/ota/api/v1/{device}_{type}
