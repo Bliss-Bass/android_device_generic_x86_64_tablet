@@ -16,6 +16,15 @@
 
 PRODUCT_DIR := $(dir $(lastword $(filter-out device/common/%,$(filter device/%,$(ALL_PRODUCTS)))))
 
+
+# TV config
+ifeq ($(USE_TV_BUILD), true)
+
+# ATV
+PRODUCT_IS_ATV := true
+
+endif
+
 # No Compressed APEXes
 OVERRIDE_PRODUCT_COMPRESSED_APEX := false
 
@@ -151,11 +160,16 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
 PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
-PRODUCT_CHARACTERISTICS := tablet
 
 # AAPT
+ifeq ($(USE_TV_BUILD), true)
+PRODUCT_CHARACTERISTICS := tv
+PRODUCT_AAPT_PREF_CONFIG := tvdpi
+else
+PRODUCT_CHARACTERISTICS := tablet
 PRODUCT_AAPT_CONFIG := normal large xlarge mdpi hdpi
 PRODUCT_AAPT_PREF_CONFIG := mdpi
+endif
 
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
@@ -256,10 +270,12 @@ endif
 # Add agp-apps
 $(call inherit-product-if-exists, vendor/agp-apps/agp-apps.mk)
 
+ifneq ($(USE_TV_BUILD), true)
 # Enable MultiWindow
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.debug.multi_window=true \
     persist.sys.debug.desktop_mode=true
+endif
 
 # DRM service opt-in
 PRODUCT_VENDOR_PROPERTIES += drm.service.enabled=true

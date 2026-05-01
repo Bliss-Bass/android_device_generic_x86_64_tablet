@@ -17,10 +17,26 @@
 $(call inherit-product,$(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
+# TV config
+ifeq ($(USE_TV_BUILD), true)
+$(call inherit-product, device/google/atv/products/atv_base.mk)
+
+TARGET_ATV_FORCE_1080_SCALING := false
+$(call inherit-product, vendor/lineage/config/common_tv.mk)
+$(call inherit-product,$(LOCAL_PATH)/../device.mk)
+
+
+endif
+
 # Inherit lowram TV config for Go build
+ifeq ($(USE_TV_LOWRAM), true)
+
+BOARD_IS_GO_BUILD := true
 $(call inherit-product, device/google/atv/products/atv_lowram_defaults.mk)
 PRODUCT_PACKAGES += \
     TvLowRamOverlay
+
+endif
 
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_tablet.mk)
