@@ -50,6 +50,7 @@ function init_misc()
 	fi
 
 	# disable virt_wifi by default, only turn on when user set VIRT_WIFI=1
+	local wifi_name=${VIRT_WIFI_NAME:-wifi_eth}
 	local eth=`getprop net.virt_wifi eth0`
 	if [ -d /sys/class/net/$eth -a "$VIRT_WIFI" -gt "0" ]; then
 		if [ -n "$wifi" -a "$VIRT_WIFI" -ge "1" ]; then
@@ -57,9 +58,9 @@ function init_misc()
 		fi
 		if [ ! -d /sys/class/net/wlan0 ]; then
 			ifconfig $eth down
-			ip link set $eth name wifi_eth
-			ifconfig wifi_eth up
-			ip link add link wifi_eth name wlan0 type virt_wifi
+			ip link set $eth name $wifi_name
+			ifconfig $wifi_name up
+			ip link add link $wifi_name name wlan0 type virt_wifi
 		fi
 	fi
 
