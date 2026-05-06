@@ -203,4 +203,9 @@
          rotations as the default behavior. -->
     <bool name="config_allowAllRotations">true</bool>
 
+    <!-- Multi-Window Tweaks -->
+    <bool name="config_supportsMultiWindow">true</bool>
+    <bool name="config_supportsSplitScreenMultiWindow">true</bool>
+    
+
 </resources>
