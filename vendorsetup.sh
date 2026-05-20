@@ -16,9 +16,12 @@
 
 # Get the directory of this vendorsetup.sh script
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
-
+if [ "$SKIP_AG_DOWNLOADS" != "true" ]; then
 bash bootable/aaropa/download.sh
+bash bootable/newinstaller-ng/download.sh
 bash ${CURRENT_DIR}/download_sof-firmware.sh
 bash ${CURRENT_DIR}/download_ids.sh
 bash ${CURRENT_DIR}/download_toolchain.sh
 bash ${CURRENT_DIR}/download_wireless-regdb.sh
+fi
+
