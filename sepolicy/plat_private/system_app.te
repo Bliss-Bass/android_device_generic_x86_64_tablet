@@ -1,0 +1,5 @@
+# Allow system apps to search and write to the /boot directory
+allow system_app bootdir_file:dir { search write add_name remove_name };
+
+# Allow system apps to create, read, and write files in /boot
+allow system_app bootdir_file:file { create read write open getattr setattr };
