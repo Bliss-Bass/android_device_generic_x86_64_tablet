@@ -22,7 +22,7 @@ static const std::string kDmiIdPath = "/sys/devices/virtual/dmi/id/";
 
 static const std::unordered_map<std::string, std::string> kDmiIdToPropertyMap = {
     {"bios_version", "ro.boot.bootloader"},
-    {"product_serial", "ro.bliss.serialnumber"},
+    {"product_serial", "ro.los.serialnumber"},
     {"board_name", "ro.product.board"},
 };
 
