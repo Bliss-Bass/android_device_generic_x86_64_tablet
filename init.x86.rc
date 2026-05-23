@@ -116,11 +116,12 @@ service vendor.boot-mode-selection /vendor/bin/boot-mode-selection.sh ${sys.shut
     disabled
     oneshot
 
-service thermal-daemon /vendor/bin/thermal-daemon --adaptive
+service thermal-daemon /vendor/bin/thermal-daemon --ignore-cpuid-check \
+    --config-file /vendor/etc/thermal-daemon/thermal-conf.xml
     class main
-    user system
-    group system
-    disabled
+    user root
+    group root
+    capabilities SYS_ADMIN
 
 service btattach /system/vendor/bin/btattach
     class main
