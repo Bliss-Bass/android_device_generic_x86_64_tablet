@@ -249,9 +249,6 @@ TARGET_RECOVERY_UI_LIB := librecovery_ui_x86
 TARGET_INIT_VENDOR_LIB ?= //$(LOCAL_COMMON_TREE):init_x86
 TARGET_RECOVERY_DEVICE_MODULES ?= init_x86
 
-# Fingerprint override
-BUILD_FINGERPRINT := google/fugu/fugu:8.0.0/OPR2.170623.027/4397545:user/release-keys
-
 # Include GloDroid components
 include $(LOCAL_COMMON_TREE)/glodroid/BoardConfig_glodroid.mk
 
