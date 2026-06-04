@@ -246,7 +246,7 @@ TARGET_RECOVERY_FSTAB := $(LOCAL_COMMON_TREE)/recovery.fstab
 TARGET_RECOVERY_UI_LIB := librecovery_ui_x86
 
 # Fingerprint override
-BUILD_FINGERPRINT := google/kevin/kevin_cheets:7.1.1/R61-9765.85.0/4391409:user/release-keys
+BUILD_FINGERPRINT := google/fugu/fugu:8.0.0/OPR2.170623.027/4397545:user/release-keys
 
 # Include GloDroid components
 include $(LOCAL_COMMON_TREE)/glodroid/BoardConfig_glodroid.mk
