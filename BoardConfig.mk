@@ -15,8 +15,6 @@ TARGET_2ND_ARCH_VARIANT := sandybridge
 TARGET_CPU_VARIANT := generic
 TARGET_2ND_CPU_VARIANT := generic
 
-include vendor/ax86-lite/ax86BoardConfig.mk
-
 ifeq ($(USE_LIBNDK_TRANSLATION_NB),true)
 include vendor/google/emu-x86/board/native_bridge_arm_on_x86.mk
 endif
@@ -204,6 +202,10 @@ endif
 ifeq ($(BOARD_IS_ZENITH_BUILD),true)
 KERNEL_DIR := kernel/x86/zenith
 endif
+
+# Bass / ax86-lite kernel cmdline flags (SET_ADB_INSECURE_MODE, UI modes, etc.)
+# Must be included after all BOARD_KERNEL_CMDLINE := / += assignments above.
+include vendor/ax86-lite/ax86BoardConfig.mk
 
 TARGET_KERNEL_SOURCE := $(KERNEL_DIR)
 COMPATIBILITY_ENHANCEMENT_PACKAGE := true
