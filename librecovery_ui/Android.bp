@@ -24,7 +24,6 @@ cc_library {
         "-Wall",
         "-Wextra",
         "-Werror",
-        "-pedantic",
     ],
     srcs: [
         "recovery_ui.cpp",
