@@ -245,10 +245,6 @@ TARGET_SYSTEM_PROP += $(LOCAL_COMMON_TREE)/properties/system.prop
 TARGET_RECOVERY_FSTAB := $(LOCAL_COMMON_TREE)/recovery.fstab
 TARGET_RECOVERY_UI_LIB := librecovery_ui_x86
 
-# Init
-TARGET_INIT_VENDOR_LIB ?= //$(LOCAL_COMMON_TREE):init_x86
-TARGET_RECOVERY_DEVICE_MODULES ?= init_x86
-
 # Fingerprint override
 BUILD_FINGERPRINT := google/kevin/kevin_cheets:7.1.1/R61-9765.85.0/4391409:user/release-keys
 

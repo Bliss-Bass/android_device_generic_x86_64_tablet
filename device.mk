@@ -177,6 +177,9 @@ ifeq ($(BOARD_IS_GO_BUILD),true)
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-go
 endif
 
+# Init
+$(call soong_config_set,libinit,vendor_init_lib,//$(LOCAL_PATH):init_x86)
+
 # Force sdcardfs to use esdfs instead
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.sys.sdcardfs=false \
