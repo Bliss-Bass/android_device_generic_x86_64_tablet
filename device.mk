@@ -254,12 +254,12 @@ ifeq ($(BOARD_IS_SURFACE_BUILD),true)
 ifeq ($(BOARD_IS_ZENITH_BUILD),true)
 $(error "Surface build should not be mixed with Zenith build")
 endif
-BLISS_SPECIAL_VARIANT := -Surface
+LINEAGE_SPECIAL_VARIANT := -Surface
 endif
 
 # Zenith
 ifeq ($(BOARD_IS_ZENITH_BUILD),true)
-BLISS_SPECIAL_VARIANT := -Zenith
+LINEAGE_SPECIAL_VARIANT := -Zenith
 endif
 
 ifeq ($(USE_WIDEVINE),true)
@@ -283,3 +283,4 @@ PRODUCT_VENDOR_PROPERTIES += drm.service.enabled=true
 PRODUCT_REQUIRES_INSECURE_EXECMEM_FOR_SWIFTSHADER := true
 
 $(call inherit-product-if-exists, hardware/x86power/x86power.mk)
+$(call inherit-product-if-exists, vendor/ax86-lite/branding/ax86_branding_product.mk)
