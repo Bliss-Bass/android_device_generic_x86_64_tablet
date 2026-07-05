@@ -254,12 +254,16 @@ ifeq ($(BOARD_IS_SURFACE_BUILD),true)
 ifeq ($(BOARD_IS_ZENITH_BUILD),true)
 $(error "Surface build should not be mixed with Zenith build")
 endif
-LINEAGE_SPECIAL_VARIANT := -Surface
+ifeq ($(filter -Surface%,$(LINEAGE_SPECIAL_VARIANT)),)
+LINEAGE_SPECIAL_VARIANT := $(LINEAGE_SPECIAL_VARIANT)-Surface
+endif
 endif
 
 # Zenith
 ifeq ($(BOARD_IS_ZENITH_BUILD),true)
-LINEAGE_SPECIAL_VARIANT := -Zenith
+ifeq ($(filter -Zenith%,$(LINEAGE_SPECIAL_VARIANT)),)
+LINEAGE_SPECIAL_VARIANT := $(LINEAGE_SPECIAL_VARIANT)-Zenith
+endif
 endif
 
 ifeq ($(USE_WIDEVINE),true)
