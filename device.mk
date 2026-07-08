@@ -64,8 +64,6 @@ PRODUCT_PROPERTY_OVERRIDES := \
     external_storage.casefold.enabled=1 \
     external_storage.projid.enabled=1
 
-PRODUCT_SYSTEM_EXT_PROPERTIES += ro.setupwizard.mode=DISABLED
-
 PRODUCT_COPY_FILES := \
     $(if $(wildcard $(PRODUCT_DIR)init.rc),$(PRODUCT_DIR)init.rc:root/init.rc) \
     $(if $(wildcard $(PRODUCT_DIR)init.sh),$(PRODUCT_DIR),$(LOCAL_PATH)/)init.sh:system/etc/init.sh \
