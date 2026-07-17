@@ -116,6 +116,10 @@
          available to the system.-->
     <bool name="config_freeformWindowManagement">true</bool>
 
+    <!-- x86 tablet Desktop/Hybrid modes use the built-in panel as part of the display topology. -->
+    <bool name="config_canInternalDisplayHostDesktops">true</bool>
+    <bool name="config_isDesktopModeSupported">true</bool>
+
     <!-- Controls the opacity of the navigation bar depending on the visibility of the
          various workspace stacks.
          0 - Nav bar is always opaque when either the freeform stack or docked stack is visible.
