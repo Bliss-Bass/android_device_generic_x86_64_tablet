@@ -907,6 +907,43 @@ function set_custom_timezone()
 	
 }
 
+# Acer Switch SA5-271 / SA5-271P detachable keyboard (USB 06cb:81a7, Chicony).
+# hid-rmi binds the Synaptics composite and is known to kernel-panic on undock
+# (rmi_hid_read_block timeout / teardown race). Prefer hid-generic and blocklist
+# hid_rmi so reconnect does not reload it.
+# Ref: https://www.spinics.net/lists/linux-input/msg58433.html
+function quirk_acer_switch_keyboard_cover()
+{
+	case "$UEVENT" in
+		*SwitchSA5-271*|*SwitchSA5-271P*)
+			;;
+		*)
+			return 0
+			;;
+	esac
+
+	mkdir -p /data/vendor
+	if ! grep -qs 'blocklist hid_rmi' /data/vendor/modules.blocklist 2>/dev/null; then
+		echo 'blocklist hid_rmi' >> /data/vendor/modules.blocklist
+	fi
+	if [ ! -x /data/vendor/modprobe.sh ]; then
+		cat > /data/vendor/modprobe.sh <<'EOF'
+#!/system/bin/sh
+exec /system/bin/modprobe -b "$@"
+EOF
+		chmod 755 /data/vendor/modprobe.sh
+	fi
+	echo /data/vendor/modprobe.sh > /proc/sys/kernel/modprobe
+
+	for d in /sys/bus/hid/drivers/hid-rmi/0003:06CB:81A7.*; do
+		[ -e "$d" ] || continue
+		id=$(basename "$d")
+		echo "$id" > /sys/bus/hid/drivers/hid-rmi/unbind 2>/dev/null
+		echo "$id" > /sys/bus/hid/drivers/hid-generic/bind 2>/dev/null
+	done
+	modprobe -r hid_rmi 2>/dev/null
+}
+
 function do_init()
 {
 	init_misc
@@ -924,6 +961,7 @@ function do_init()
 	init_hal_lights
 	init_hal_power
 	init_hal_sensors
+	quirk_acer_switch_keyboard_cover
 	init_tscal
 	init_ril
 	init_prepare_ota
@@ -944,6 +982,9 @@ function do_bootcomplete()
 	[ -z "$(getprop persist.sys.root_access)" ] && setprop persist.sys.root_access 3
 
 	lsmod | grep -Ehq "brcmfmac|rtl8723be" && setprop wlan.no-unload-driver 1
+
+	# Re-apply after userdata is up (blocklist + modprobe wrapper need /data/vendor).
+	quirk_acer_switch_keyboard_cover
 
 	case "$PRODUCT" in
 		Surface*Go)
