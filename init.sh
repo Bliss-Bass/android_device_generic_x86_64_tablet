@@ -907,10 +907,12 @@ function set_custom_timezone()
 	
 }
 
+
 # Acer Switch SA5-271 / SA5-271P detachable keyboard (USB 06cb:81a7, Chicony).
 # hid-rmi binds the Synaptics composite and is known to kernel-panic on undock
-# (rmi_hid_read_block timeout / teardown race). Prefer hid-generic and blocklist
-# hid_rmi so reconnect does not reload it.
+# (rmi_hid_read_block timeout / teardown race). Prefer hid-generic and refuse
+# only hid_rmi reloads — do NOT force modprobe -b globally (that applies the
+# system modules.blocklist to every hotplug/firmware load and breaks WiFi).
 # Ref: https://www.spinics.net/lists/linux-input/msg58433.html
 function quirk_acer_switch_keyboard_cover()
 {
@@ -923,16 +925,19 @@ function quirk_acer_switch_keyboard_cover()
 	esac
 
 	mkdir -p /data/vendor
-	if ! grep -qs 'blocklist hid_rmi' /data/vendor/modules.blocklist 2>/dev/null; then
-		echo 'blocklist hid_rmi' >> /data/vendor/modules.blocklist
-	fi
-	if [ ! -x /data/vendor/modprobe.sh ]; then
-		cat > /data/vendor/modprobe.sh <<'EOF'
+	# Drop the broken global -b wrapper from earlier builds if present.
+	rm -f /data/vendor/modules.blocklist
+	cat > /data/vendor/modprobe.sh <<'EOF'
 #!/system/bin/sh
-exec /system/bin/modprobe -b "$@"
+# Refuse only hid-rmi; pass every other request to stock modprobe unchanged.
+for _arg in "$@"; do
+	case "$_arg" in
+		hid_rmi|hid-rmi|*/hid-rmi.ko|*/hid_rmi.ko) exit 0 ;;
+	esac
+done
+exec /system/bin/modprobe "$@"
 EOF
-		chmod 755 /data/vendor/modprobe.sh
-	fi
+	chmod 755 /data/vendor/modprobe.sh
 	echo /data/vendor/modprobe.sh > /proc/sys/kernel/modprobe
 
 	for d in /sys/bus/hid/drivers/hid-rmi/0003:06CB:81A7.*; do
@@ -983,7 +988,7 @@ function do_bootcomplete()
 
 	lsmod | grep -Ehq "brcmfmac|rtl8723be" && setprop wlan.no-unload-driver 1
 
-	# Re-apply after userdata is up (blocklist + modprobe wrapper need /data/vendor).
+	# Re-apply after userdata is up (modprobe wrapper lives under /data/vendor).
 	quirk_acer_switch_keyboard_cover
 
 	case "$PRODUCT" in
