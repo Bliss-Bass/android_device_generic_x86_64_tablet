@@ -31,6 +31,10 @@ ifeq ($(ANDROID_USE_NDK_TRANSLATION),true)
 include vendor/google/proprietary/ndk_translation-prebuilt/board/native_bridge_arm_on_x86.mk
 endif
 
+ifeq ($(USE_DIGITALIS),true)
+include vendor/ax86-lite/addons/digitalis/board/native_bridge_arm64_on_x86_64.mk
+endif
+
 TARGET_CPU_ABI_LIST_64_BIT := $(TARGET_CPU_ABI) $(NATIVE_BRIDGE_ABI_LIST_64_BIT)
 TARGET_CPU_ABI_LIST_32_BIT := $(TARGET_2ND_CPU_ABI) $(NATIVE_BRIDGE_ABI_LIST_32_BIT)
 TARGET_CPU_ABI_LIST := $(TARGET_CPU_ABI) $(TARGET_2ND_CPU_ABI) $(NATIVE_BRIDGE_ABI_LIST_32_BIT) $(NATIVE_BRIDGE_ABI_LIST_64_BIT)
