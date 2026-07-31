@@ -1,0 +1,10 @@
+// KernelSU manager — installed to /system/etc/user_app and pm-installed on first boot
+// by device init.sh (same path as A14 user_app packaging).
+// Gated in packages.mk via BLISS_REMOVE_KSU (!= true), matching --noksu builds.
+
+prebuilt_etc {
+    name: "kernelsu",
+    src: "kernelsu.apk",
+    filename: "kernelsu.apk",
+    relative_install_path: "user_app",
+}

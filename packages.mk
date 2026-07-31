@@ -110,7 +110,13 @@ PRODUCT_PACKAGES += \
     x86_dhcpclient.recovery
 
 # A collection of scripts at scripts/
-PRODUCT_PACKAGES += blisspath boot-mode-selection.sh
+PRODUCT_PACKAGES += blisspath boot-mode-selection.sh recovery.bms.sh
+
+# KernelSU manager APK -> /system/etc/user_app (first-boot pm install via init.sh).
+# Omitted when --noksu / BLISS_REMOVE_KSU=true.
+ifneq ($(BLISS_REMOVE_KSU),true)
+PRODUCT_PACKAGES += kernelsu
+endif
 
 ## ATV
 PRODUCT_PACKAGES += \
