@@ -205,6 +205,11 @@ endif
 # Zenith
 ifeq ($(BOARD_IS_ZENITH_BUILD),true)
 KERNEL_DIR := kernel/x86/zenith
+# KernelSU on Zenith 6.18 aborts unless X86_FEATURE_INDIRECT_SAFE is set
+# (KernelSU x86_64-support.md). Enable via cmdline when KSU is not removed.
+ifneq ($(BLISS_REMOVE_KSU),true)
+BOARD_KERNEL_CMDLINE += syscall_hardening=off
+endif
 endif
 
 # Bass / ax86-lite kernel cmdline flags (SET_ADB_INSECURE_MODE, UI modes, etc.)
