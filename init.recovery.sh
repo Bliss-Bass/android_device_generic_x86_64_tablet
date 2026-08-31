@@ -111,6 +111,16 @@ function init_recovery_device_link()
 	# because some scripts are dumb
 	mkdir -p /dev/block/bootdevice
 	ln -s /dev/block/by-name /dev/block/bootdevice/by-name
+
+	# /data is the install-disk data directory (aaropa bind of $FS/data), not a
+	# recovery.fstab partition. Do not set sys.recovery.data_is_part for it.
+	# Session logs live on tmpfs (/tmp, /cache); copy_logs persists here.
+	if [ -d /data ] && [ -w /data ]; then
+		mkdir -p /data/misc/recovery
+	fi
+	if [ -d /boot ] && [ -w /boot ]; then
+		mkdir -p /boot/recovery
+	fi
 }
 
 function do_netconsole()
