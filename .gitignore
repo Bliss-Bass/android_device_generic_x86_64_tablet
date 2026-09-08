@@ -1,3 +1,7 @@
 # Ignore downloaded ID files
 ids/*.ids
 wireless-regdb/regulatory.db*
+
+# ax86-lite: Soong wrappers + prebuilts staged at build time from
+# vendor/ax86-lite/addons/*/device_wrappers/… — not source of truth; do not commit.
+ax86-addons/

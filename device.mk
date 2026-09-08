@@ -282,3 +282,8 @@ PRODUCT_VENDOR_PROPERTIES += drm.service.enabled=true
 PRODUCT_REQUIRES_INSECURE_EXECMEM_FOR_SWIFTSHADER := true
 
 $(call inherit-product-if-exists, hardware/x86power/x86power.mk)
+
+# Optional Bass / ax86-lite staging hook. When vendor/ax86-lite runs integrate-addons,
+# it writes ax86-addons/product.mk (gitignored) with vendor inherit + Soong namespaces.
+# Absent on stock/los-tv-x86 builds — -include is a no-op.
+-include $(LOCAL_PATH)/ax86-addons/product.mk
